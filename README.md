@@ -35,7 +35,7 @@ In the firstViewController, create a textfield and button that leads to the seco
                 }
         }
 ```
-### Location Manager, MapKit
+### Location Manager, MapKit, Annotation 
 Getting the location of TajMahal. You need to import MapKit 
 
 ```Swift
@@ -60,5 +60,49 @@ Getting the location of TajMahal. You need to import MapKit
         
         mapKitView.addAnnotation(tajAnnotation)
     }
+```
+
+### Location, Getting User's Current Location
+
+```Swift 
+import UIKit
+import CoreLocation
+import MapKit
+
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
+
+    var locationManager: CLLocationManager = CLLocationManager()
+    
+    
+    @IBOutlet weak var mapKietView: MKMapView!
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.locationManager.delegate = self
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        self.mapKietView.showsUserLocation = true
+        self.locationManager.requestAlwaysAuthorization()
+        self.locationManager.startUpdatingLocation()
+        mapKietView.showsUserLocation = true
+        mapKietView.userTrackingMode = MKUserTrackingMode.Follow
+        
+        
+    }
+
+   //Location Delegate Methods 
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        let location = locations.last
+        let center = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
+        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+        self.mapKietView.setRegion(region, animated: true)
+        self.locationManager.stopUpdatingLocation()
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("Error" + error.localizedDescription)
+    }
+    
+
+}
 ```
 
