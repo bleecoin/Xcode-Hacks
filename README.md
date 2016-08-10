@@ -72,9 +72,8 @@ import MapKit
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate{
 
     var locationManager: CLLocationManager = CLLocationManager()
-    
-    
     @IBOutlet weak var mapKietView: MKMapView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.locationManager.delegate = self
@@ -84,12 +83,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         self.locationManager.startUpdatingLocation()
         mapKietView.showsUserLocation = true
         mapKietView.userTrackingMode = MKUserTrackingMode.Follow
-        
-        
     }
-
-   //Location Delegate Methods 
-    
+   //Location Delegate Methods
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last
         let center = CLLocationCoordinate2D(latitude: (location?.coordinate.latitude)!, longitude: (location?.coordinate.longitude)!)
@@ -101,8 +96,6 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         print("Error" + error.localizedDescription)
     }
-    
-
 }
 ```
 
