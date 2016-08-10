@@ -35,5 +35,30 @@ In the firstViewController, create a textfield and button that leads to the seco
                 }
         }
 ```
+### Location Manager, MapKit
+Getting the location of TajMahal. You need to import MapKit 
 
+```Swift
+    func getMapTajMahal() {
+        //Coordinates
+        let tajLat: CLLocationDegrees = 27.175015
+        let tajLong: CLLocationDegrees = 78.042139
+        let tajCoordinate = CLLocationCoordinate2D(latitude: tajLat, longitude: tajLat)
+        
+        //Span
+        let latDelta: CLLocationDegrees = 0.01
+        let longDelta: CLLocationDegrees = 0.01
+        let tajSpan = MKCoordinateSpan(latitudeDelta: latDelta, longitudeDelta: longDelta)
+        let tajRegion = MKCoordinateRegion(center: tajCoordinate, span: tajSpan)
+        
+        mapKitView.setRegion(tajRegion, animated: true)
+        
+        let tajAnnotation = MKPointAnnotation()
+        tajAnnotation.title = "Hahah"
+        tajAnnotation.subtitle = "Good"
+        tajAnnotation.coordinate = tajCoordinate
+        
+        mapKitView.addAnnotation(tajAnnotation)
+    }
+```
 
