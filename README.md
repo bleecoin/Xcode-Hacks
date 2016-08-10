@@ -3,7 +3,7 @@
 ## Useful Features iOS Developers Should Know
 
 ### Customizing UINavigation & Status Bar
-Put these lineso of code to AppDeledate.swift under didFinishLaunchingWithOptions
+Put these lines of code to AppDeledate.swift under func didFinishLaunchingWithOptions 
 
     UINavigationBar.appearance().barTintColor = UIColor(red: 42/255.0, green: 140/255.0, blue: 166/255.0, alpha: 0.5)
 
