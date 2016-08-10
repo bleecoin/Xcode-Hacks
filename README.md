@@ -16,6 +16,14 @@ Put these lines of code to AppDeledate.swift under func didFinishLaunchingWithOp
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         return true
 ```
+### Making a segue by pressing a button 
+```Swift
+        @IBAction func buttonPressed(sender: AnyObject) {
+        performSegueWithIdentifier("goToSecond", sender: self)
+        }
+        //You must drag the button to another view controller and name the segue as "goToSecond" on the storyboard
+        
+
     
 
 
