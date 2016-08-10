@@ -22,10 +22,18 @@ Put these lines of code to AppDeledate.swift under func didFinishLaunchingWithOp
         performSegueWithIdentifier("goToSecond", sender: self)
         }
         //You must drag the button to another view controller and name the segue as "goToSecond" on the storyboard
-        
+```
 
-    
+### Passing Data to another viewController 
+In the secondViewController, create a string variable called, "receviedString"
+In the firstViewController, create a textfield and button that leads to the secondViewController
 
-
+```Swift
+        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+                var secondVC: secondViewController = segue.destinationViewController as! secondViewController 
+                secondVC.receivedString = self.textField.text!
+                }
+        }
+```
 
 
