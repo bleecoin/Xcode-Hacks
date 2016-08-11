@@ -153,9 +153,9 @@ secondViewController (name: PopUpViewController)
                         })
                 }
         }
-        
-        
-        
-
-
+```
+### Generation Random Number
+```Swift 
+        func randomInt(min: Int, max: Int) -> {
+                return min + Int(arc4random_uniform(UInt32(max-min +1)
 
