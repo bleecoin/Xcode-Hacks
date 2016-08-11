@@ -158,4 +158,19 @@ secondViewController (name: PopUpViewController)
 ```Swift 
         func randomInt(min: Int, max: Int) -> {
                 return min + Int(arc4random_uniform(UInt32(max-min +1)
-
+```
+### Converting NSDate <-> Date(String)
+```Swift 
+        // NSDate to String 
+        let date = NSDate() // Aug 10, 2016, 10:31PM
+        let dateformatter = NSDateFormatter()
+        dateFormatter.dateFormat = "dd-MM-yyyy"
+        let todayDate: String = dateFormatter.stringFromDate(date)
+        print(todayDate) // 10-08-2016
+        
+        // String to NSDate
+        let todayDate = "10-08-2016"
+        let newDateFormatter = NSDateFormatter()
+        var dateFromString = dateFormatter.dateFromString(todayDate)
+        print(dateFromString)
+```
