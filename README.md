@@ -174,3 +174,27 @@ secondViewController (name: PopUpViewController)
         var dateFromString = dateFormatter.dateFromString(todayDate)
         print(dateFromString)
 ```
+
+###Alert Controller 
+```Swift
+        LogOutAlert = UIAlertController(title: "Want to log out", message" "You sure?", preferredStyle: .Alert)
+        // Creating LogOut Button
+        let logOutAlertAction = UIAlertAction(title: "Log Out", style. Default, handler: { action in 
+        // execute code that needs to be implemented
+        let loginVieController: UIViewController = self.storyboard!.instantiateViewControllerWithIdentifir("login")
+        self.presentViewController(loginViewController, animated: false, completion: nil) })
+        
+        // Create Cancel Button 
+        let cancelAction = UIAlertAction(title: "Cancel", style .Cancel, handler: { action in 
+                print("Cancel")
+        self.navigationController?.popViewControllerAnimated(true) })
+        
+        logOUtAlert?.addAction(logOutAlertAction)
+        logOUtAlert?.addAction(cancelAction)
+        
+        override func viewDidAppear(animated: Bool) {
+                super.viewDidAppear(true)
+                self.presentViewController(LogOUtAlert!, animated: true, completion: nil) 
+                }
+        }
+```
