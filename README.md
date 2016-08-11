@@ -5,14 +5,10 @@
 ### Customizing UINavigation & Status Bar
 Put these lines of code to AppDeledate.swift under func didFinishLaunchingWithOptions 
 ```Swift
-        UINavigationBar.appearance().barTintColor = UIColor(red: 42/255.0, green: 140/255.0, blue: 166/255.0, alpha: 0.5)
-    
+        UINavigationBar.appearance().barTintColor = UIColor.redColor
         UINavigationBar.appearance().barStyle = UIBarStyle.Default
-    
-        UINavigationBar.appearance().tintColor =  UIColor(red: 204/255.0, green: 255/255.0, blue: 204/255.0, alpha: 1)
-    
-        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor(red: 204/255.0, green: 255/255.0, blue: 204/255.0, alpha: 1), NSFontAttributeName: UIFont(name: "OpenSans-Bold", size: 25)!]
-    
+        UINavigationBar.appearance().tintColor =  UIColor.redColor
+        UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.redColor, NSFontAttributeName: UIFont(name: "OpenSans-Bold", size: 25)!]
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.LightContent
         return true
 ```
@@ -98,4 +94,68 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     }
 }
 ```
+### Adding a pop-over to a view controller
+This is useful if you want to add and an invite feature or to indicate a level up. 
+1. Make two UIViewControllers. The first controller has a button that will cause the second view to pop up. 
+2. On the mainstoryboard, let the secondViewControllerID as "sbPopUpID" (any name you want) 
+
+firstViewController (name: ViewController) 
+```Swift 
+        import UIKit
+        class ViewController: UIViewController {
+                @IBAction func showPopUp(sender: AnyObject) {
+                        let popOverVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewControllerWithIdentifier("sbPopUpID")
+                        as! PopUpViewController
+                
+                //Adding secondView to the current view 
+                self.addChildViewController(popOverVC)
+                // Make the secondView's location and coordinate system relative to the firstView
+                popOverVC.view.frame = self.view.frame
+                self.view.addSubview(popOverVC.view)
+                popOverVC.didMoveToParentViewController(self)
+                }
+        override func viewDidLoad() {
+                super.viewDidLoad() 
+        }
+}
+```
+secondViewController (name: PopUpViewController) 
+```Swift
+        import Foundation
+        import UIKit
+        
+        class PopUpViewController: UIViewController {
+        override func viewDidLoad() {
+                super.viewDidLoad() 
+                self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.8)
+                self.showAnimate()
+                }
+        @IBAction func closePopUp(sender: AnyObject) {
+                self.removeAnimate() 
+                }
+        
+        // Animation of the pop up
+        func show Animate() {
+                self.view.transform = CGAffineTransformMakeScale(1.2, 1.2)
+                self.view.transform = CGAffineTransformMakeRotation(0.23)
+                self.view.alpha = 0.0
+                UIView.animateWithDuration(0.25, animations: {
+                        self.view.alpha = 1.0
+                        self.view.transform = CGAffineTransformMakeScale(1.0, 1.0)
+                        })
+        func removeAnimate() {
+                UIView.animateWithDuration(0.25, animations: {
+                        self.view.transform = CGAffineTransformMakeScale(1.3, 1.3)
+                        self.view.alpha = 0.0 }, completion: {(finished: Bool) in 
+                                if (finished) {
+                                self.view.removeFromSuperView()
+                                }
+                        })
+                }
+        }
+        
+        
+        
+
+
 
