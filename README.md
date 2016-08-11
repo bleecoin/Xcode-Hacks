@@ -177,7 +177,7 @@ secondViewController (name: PopUpViewController)
 
 ###Alert Controller 
 ```Swift
-        LogOutAlert = UIAlertController(title: "Want to log out", message" "You sure?", preferredStyle: .Alert)
+        LogOutAlert = UIAlertController(title: "Want to log out", message "You sure?", preferredStyle: .Alert)
         // Creating LogOut Button
         let logOutAlertAction = UIAlertAction(title: "Log Out", style. Default, handler: { action in 
                 let loginVieController: UIViewController = self.storyboard!.instantiateViewControllerWithIdentifir("login")
