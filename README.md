@@ -233,8 +233,10 @@ Basic object is CLLocation
         1. Coordinates
         2. Altitude
         3. Horizontal/Vertical Accuracy
-        4. Timestamp
-        4. Speed 
+        4. var timestamp: NSDate 
+        5. var speed: CLLocationSpeed //meter/second, instataneous
+        6. var course: CLLocationDirection //degrees, 0 is north, clockwise 
+        
 ##### Where is this location?
 ```Swift
         var coordinates: CLLocationCoordinate2D
@@ -253,3 +255,42 @@ Basic object is CLLocation
         Wifi node// <database lookup
         Cellular tower  // not very accurate
 ```
+##### Asking CLLocationManager what your hardware can do 
+```Swift
+        class func authorizationStatus() -> CLAuthorizationStatus // Authortized, denied, or restricted
+        class func locationServicesEnabled() -> Bool // user enabled (or not) locatons for your app
+        class func significantLocationChangeMonitoringAvailable() -> Bool
+        class func isRangeAvailable() -> Bool // device can tell how far it is from beacons 
+```
+##### Asking the users if you can monitor their location
+```Swift
+        func requestWhenInUseAuthorization() // you only wnat location data when you're active
+        func requestAlwaysAuthorization() // you want location data when you're not active too
+        // You must addd an Info.plist entry 
+        // NSLocationWhenInUseUsageDescription
+        // NSLocationAlwaysUsageDescription
+```
+##### Accuracy-based continuous location monitoring
+```Swift
+        var desiredAccuracy: CLLocationAccuracy // always set this as low as will work for you
+        var distanceFilter: CLLocationDistance 
+        
+        func startUpdatingLocation() // drains battery and will hear complaints
+        func stopUpdatingLocation() 
+        // Get nofitied via the CLLocationManager's delegate
+        func locationManager(CLLocationManager, didUpdateLocations: [CLLocation])
+```
+
+##### Error Reporting to the delegates 
+```Swift
+        func locationManager(CLLocationManager, didFailWithError: NSError)
+        // Implement
+        kCLErrorLocationUnknown // likely temporary, keep waiting (for awhile at least)
+        kCLErrorDenide
+        kCLErrorHeadingFailture
+        
+```
+
+
+
+
