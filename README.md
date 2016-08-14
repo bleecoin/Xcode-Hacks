@@ -286,11 +286,126 @@ Basic object is CLLocation
         func locationManager(CLLocationManager, didFailWithError: NSError)
         // Implement
         kCLErrorLocationUnknown // likely temporary, keep waiting (for awhile at least)
-        kCLErrorDenide
-        kCLErrorHeadingFailture
-        
+        kCLErrorDenide // user refused to allow your application to receive updates
+        kCLErrorHeadingFailture // too much local magnetic interference, keep waiting 
 ```
 
+##### Get updates in the background 
+1. "Significant" location change 
+```Swift
+      func startMonitoringSignificantLocationChanges()
+      func stopMonitoringSignificantLocationChanges()
+```
 
+2. "Region-based" location monitoring in CLLocationManager
+```Swift
+        func startMonitoringForRegion(CLRegion)
+        func stopMonitoringForRegion(CLRegion)
+        let cr = CLCircularRegion(
+                center: CLlocationCoordinate2D, 
+                radius: CLLocationDistance,
+                identifier: String) 
+        CLBeaconRegion // detecting when you are near another device 
+        //Now get notified via the CLLocationManager's delegate
+        func locationManager(CLLocationManager, didEnterRegion: CLRegion)
+        func locationManager(CLLocationManager, didExitRegion: CLRegion)
+        func locationManager(CLLocationMnager, monitoringDidFailForRegion: CLRegion, withError: NSError)
+        //Region-monitoring also works if your appliation is not running
+        var monitoredRegions: Set<CLRegion>
+        //CLRegions are tracked by name
+        //Circular region monitoring size limit 
+        var maximumRegionMonitoringDistance: CLLocationDistance { get } 
+```
 
+### Map Kit
+##### MKMapView 
+1. Coorindate
+2. Title
+3. Subtitle
+4. UIButton
+5. UIImageView
+```Swift
+        //Displays an array of objects which implement MKAnnotation
+        var annotations: [MKAnnotation[ { get }
+        // MKAnnotation protocol
+        protocol MKAnnotation: NSObject 
+                var cooridnate: CLLocationCoordinate2D { get }
+                var title: String? { get } 
+                var subtitle: String? { get } 
+```
+##### What happens when you touch on an annotation (e.g the pin)?
+```Swift
+        func canShowCallout() -> Bool // if true, it shows title/subtitle 
+        func mapView(MKMapView, didSelectAnnotationView: MKAnnotationView) 
+        // great to set up MKAnnotationView's callout lazily until it is selected and called
+        
+        func mapView(sender: MKMapView, viewForAnnoation: MKAnnotation) -> MKAnnotationView {
+                var view: MKAnnotationView! = sender.dequeueReusableAnnotationViewWithIdentifier(IDENT)
+        if view == nil {
+                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: IDENT)
+                view.canShowCallout = true // false
+        }
+        view.annotation = annotation // yes this happens twice if no dequeue
+        return view 
+}
+```
 
+##### MKAnnotationView Properties
+```Swift
+        var annotation: MKAnnotation // the annotation
+        var image: UIImage // instead of the pin, 
+        var leftCalloutAccessoryView: UIView // maybe a UIImageView
+        var rightCalloutAccessoryView: UIView // MAYBE A "disclosure" UIButton
+        var enabled: Bool // false means it ignores touch events, no delegate method, no callout
+        var centerOffset: CGPoint // where is the "head of the pin" in relative to the image
+        var draggable" Bool // only works if the annotation's coordinate's property is { get set }
+        
+        // Selected the annotation view 
+        func mapView(MKMapView, didSelectAnnotationView aView: MKAnnotationView) {
+                if let imageView = aView.leftCalloutAccessaryView as? UIImageView {
+                        imageView.image = ...
+                }
+        }
+```
+
+##### MKMapView
+```Swift
+        // Confiruing the map view's display type
+        var mapType: MKMapType // .Standard, .Satellite, .Hybrid
+        // Shwoing the user's current location 
+        var showsUserLocation: Bool
+        var isUserLocationVisible: Bool
+        var userLocation: MKUserlocation
+        // Restricting the user's interaction with the map 
+        var zoomEnabled: Bool
+        var scrollEnabled: Bool
+        var pitchEnabled: Bool // 3D
+        var rotateEnabled: Bool        
+```
+##### Size of the map
+```Swift
+        var region: MKCoordinateRegion
+        strct MKCoordinateRegion {
+                var center: CLLocationCoordinate2D 
+                var span: MKCoordinateSpan 
+                }
+        struct MKCoordinateSpan {
+                var latitudeDelta: CLLocationDegrees
+                var longtitudeDelta: CLLocationDegrees
+                }
+        func setRegion(MKCoordinateRegion, animated: Bool) // animate setting the region 
+        
+        // Can also set the center point only or set to show annotations 
+        var centerCoordinate: CLLocationCoordinate2D
+        func setCenterCoordinate(CLLocationCoordinate2D, animated: Bool)
+        func showAnnotations([MKAnnotation]. animated: Bool) 
+        
+        // You can move from SF to NY by zooming out and zooming in 
+        func mapView(MKMapView, didChangeRegionAnimated: Bool)
+        // Other powerful 
+        MKRount
+        MKPolyline
+        MKOverlay 
+```
+        
+        
