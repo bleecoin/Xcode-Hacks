@@ -196,3 +196,60 @@ secondViewController (name: PopUpViewController)
                 self.presentViewController(LogOUtAlert!, animated: true, completion: nil) 
                 }
 ```
+
+### Modal View Controllers 
+##### Preparing for a Modal Segue 
+```Swift
+        func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObjects!) {
+                if segue.identifier == "GoTOModalVC" {
+                        let vc = segue.destinationViewController as MyModalVC {
+                }
+        }
+
+        // Dismiss
+        func dismissViewControllerAnimated(Bool, completion: () -> Void) 
+```
+
+##### How is the modal view controller animated?
+```Swift 
+        var modalTransitionStyle: UIModalTransitionStyle
+        .CovereVertical // slies from the bottom (default) 
+        .FlipHorizontal // flips 
+        .CrossDissolve // presents VC fades 
+        .PartialCurl .. like eBook
+```
+
+##### Unwind Segue
+Going back to the existing viewController (use presented) 
+Instead of ctrl-dragging to another MVC. you ctrl-drag the "Exit" button in the same MVC
+
+##### Popover 
+Popovers pop an entire MVC over the rest of the screen
+
+
+### Core Location
+Basic object is CLLocation 
+##### Properties
+        1. Coordinates
+        2. Altitude
+        3. Horizontal/Vertical Accuracy
+        4. Timestamp
+        4. Speed 
+##### Where is this location?
+```Swift
+        var coordinates: CLLocationCoordinate2D
+        struct CLLOcationCoordinates2D {
+                CLLocationDegrees latitude // a Double
+                CLLocationDegrees longitude // a Double
+        }
+        var altitude: CLLocationDistance // meters
+```
+##### How close to that latitude/longtitude is this actual location?
+```Swift
+        var horizontalAccuracy: CLLocationAccuracy // in meters
+        var verticalAccuracy: CLLocationAccuracy // in meters
+        // There are three ways to get location 
+        GPS // A lot of battery
+        Wifi node// <database lookup
+        Cellular tower  // not very accurate
+```
