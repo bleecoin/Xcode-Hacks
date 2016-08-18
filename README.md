@@ -408,4 +408,16 @@ Basic object is CLLocation
         MKOverlay 
 ```
         
+### Create Views
+
+```Swift
+        var frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+        var blueView = UIView(frame: frame)
+        blueView.backgroundColor = UIColor.blueColor()
         
+        var imageView = UIImageView(frame: frame)
+        imageView.image = UIImage(named: "samily_face")
+        imageView.userInteractionEnabled = true 
+        view.addSubview(blueView)
+
+```
